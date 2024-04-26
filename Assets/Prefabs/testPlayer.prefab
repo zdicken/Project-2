@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5719158000565792459}
   - component: {fileID: 9128708112823663686}
   - component: {fileID: 6709533519356253873}
-  - component: {fileID: 35121055790841007}
+  - component: {fileID: 3638009143899499820}
   m_Layer: 0
   m_Name: testPlayer
   m_TagString: Untagged
@@ -116,7 +116,19 @@ MonoBehaviour:
     m_ActionId: ab5570c7-ff1d-461f-8901-5bb5fc8ad157
     m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6709533519356253873}
+        m_TargetAssemblyTypeName: testScript, Assembly-CSharp
+        m_MethodName: OnStop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4797d3eb-20eb-408e-88a5-661f387dfd8c
     m_ActionName: Player/Stop
   m_NeverAutoSwitchControlSchemes: 0
@@ -136,35 +148,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d9225fc08198646b0275f5133eb76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 4
-  jumpHeight: 1
-  gravityValue: -9.81
---- !u!143 &35121055790841007
-CharacterController:
+  playerSpeed: 20
+  jumpHeight: 100
+--- !u!54 &3638009143899499820
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427890625946643982}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1527836684299899556
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,8 +188,6 @@ GameObject:
   - component: {fileID: 384514612170616014}
   - component: {fileID: 4945336044127805816}
   - component: {fileID: 5033098572606497873}
-  - component: {fileID: 5025934789434878727}
-  - component: {fileID: 4801296111451775986}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -250,51 +260,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527836684299899556}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &5025934789434878727
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527836684299899556}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &4801296111451775986
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527836684299899556}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

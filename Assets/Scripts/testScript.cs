@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
 public class testScript : MonoBehaviour
 {
     public float playerSpeed = 2.0f;
     public float jumpHeight = 1.0f;
-    public float gravityValue = -9.81f;
 
-    private CharacterController controller;
+    private Rigidbody rb;
+    private GameController gameController;
     private Vector3 playerVelocity;
-    private bool groundedPlayer;
+    private bool groundedPlayer = true;
 
     private Vector2 movementInput = Vector2.zero;
-    private bool jumpInput = false;
+    private bool jumped = false;
+    private bool stopped = false;
 
     private void Start() {
-        controller = gameObject.GetComponent<CharacterController>();
+        rb = gameObject.GetComponent<Rigidbody>();
+        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
     }
 
     public void OnMove(InputAction.CallbackContext context) {
@@ -26,26 +27,38 @@ public class testScript : MonoBehaviour
     }
 
     public void OnJump(InputAction.CallbackContext context) {
-        jumpInput = context.action.triggered;
+        jumped = context.action.triggered;
     }
 
-    void Update() {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
+    public void OnStop(InputAction.CallbackContext context) {
+        stopped = context.action.triggered;
+    }
+
+    void FixedUpdate() {
+        //groundedPlayer = controller.isGrounded;
+        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y) * playerSpeed;
+        if (move != Vector3.zero) {
+            //gameObject.transform.forward = move;
         }
 
-        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        if (!stopped) { //if player is holding the stop button, do none of the physics calculations
+            rb.AddForce(move);
 
-        // Changes the height position of the player..
-        if (jumpInput && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            //changes the height position of the player
+            if (jumped && groundedPlayer)
+            {
+                rb.AddForce(0, jumpHeight, 0);
+            }
+
+            if (transform.position.y < -10) { //check if below certain y position
+                reset();
+            }
+        } else {
+            rb.Sleep();
         }
+    }
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+    void reset() {
+        gameController.resetPlayer(this.gameObject);
     }
 }

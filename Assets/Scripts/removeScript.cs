@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class removeScript : MonoBehaviour {
-    private triggerObject[] triggers;
+    public AudioPlayer audioPlayer;
+    public string soundToPlay;
+
+    private List<triggerObject> triggers = new List<triggerObject>();
     
     void Start() {
-        int i = 0;
-        triggers = new triggerObject[this.transform.childCount];
-        foreach (Transform child in transform) {
-            triggers[i] = child.gameObject.GetComponent<triggerObject>();
-            i++;
+        foreach (Transform child in transform) { //find each child gameobject with the triggerObject script and add them to the triggers array
+            triggerObject newTrigger = child.gameObject.GetComponent<triggerObject>();
+            if(newTrigger) { //null test for the script
+                triggers.Add(newTrigger);
+            }
         }
     }
 
     void FixedUpdate() {
-        foreach(triggerObject trigger in triggers) {
-            print(trigger.getIsTriggered());
+        foreach(triggerObject trigger in triggers) { //read each part of the trigger array
             if(!trigger.getIsTriggered()) {
-                return;
+                return; //if any of the triggers aren't active, break out of the update
             }
         }
-        Destroy(this.gameObject);
+        if(audioPlayer != null) { //if there is an audioplayer script, play any audiosources
+            audioPlayer.PlaySound(soundToPlay);
+        }
+        Destroy(this.gameObject); //otherwise, remove this gameobject (and by extension its children)
     }
 }
