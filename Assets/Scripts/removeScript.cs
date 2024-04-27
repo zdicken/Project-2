@@ -9,6 +9,7 @@ public class removeScript : MonoBehaviour {
     private List<triggerObject> triggers = new List<triggerObject>();
     
     void Start() {
+        audioPlayer = new AudioPlayer(transform);
         foreach (Transform child in transform) { //find each child gameobject with the triggerObject script and add them to the triggers array
             triggerObject newTrigger = child.gameObject.GetComponent<triggerObject>();
             if(newTrigger) { //null test for the script
@@ -23,9 +24,7 @@ public class removeScript : MonoBehaviour {
                 return; //if any of the triggers aren't active, break out of the update
             }
         }
-        if(audioPlayer != null) { //if there is an audioplayer script, play any audiosources
-            audioPlayer.PlaySound(soundToPlay);
-        }
+        audioPlayer.PlaySound(soundToPlay);
         Destroy(this.gameObject); //otherwise, remove this gameobject (and by extension its children)
     }
 }

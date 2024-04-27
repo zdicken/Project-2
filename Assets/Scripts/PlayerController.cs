@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
+        ragdollTimer -= Time.deltaTime;
         if(ragdollTimer <= 0) {
             rb.isKinematic = true;
             controller.enabled = true; //ensure the player is not ragdolled
@@ -73,19 +74,22 @@ public class PlayerController : MonoBehaviour {
                 playerVelocity.y += gravityValue * Time.deltaTime;
                 controller.Move(playerVelocity * Time.deltaTime);
 
-                if (transform.position.y < -10 || queueReset) { //check if below certain y position. if yes, reset to last checkpoint
-                    reset();
-                    queueReset = false;
-                }
+                
             }
-        } else {ragdollTimer -= Time.deltaTime;}
+        }
+
+        if (transform.position.y < -10 || queueReset) { //check if below certain y position. if yes, reset to last checkpoint
+            reset();
+            queueReset = false;
+            ragdollTimer = 0;
+        }
     }
 
-    void reset() {
+    public void reset() {
         gameController.resetPlayer(this.gameObject);
     }
 
-    void ragdoll(float time) { //ragdolls the player for a certain amount of time in seconds
+    public void ragdoll(float time) { //ragdolls the player for a certain amount of time in seconds
         ragdollTimer = time;
         rb.isKinematic = false;
         controller.enabled = false;

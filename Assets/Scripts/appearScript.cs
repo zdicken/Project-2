@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class appearScript : MonoBehaviour {
-    public bool requiresAll = true; //fix this
-
     private List<triggerObject> triggers = new List<triggerObject>();
     private MeshRenderer mesh;
     private BoxCollider boxCollider;
@@ -20,21 +18,16 @@ public class appearScript : MonoBehaviour {
 
     void FixedUpdate() {
         foreach(triggerObject trigger in triggers) {
-            //print(trigger.getIsTriggered());
-            if (!trigger.getIsTriggered() && requiresAll) {
-                mesh.enabled = false;
-                boxCollider.enabled = false;
+            if (!trigger.getIsTriggered()) { //if any child trigger objects aren't triggered, disable the mesh and collider and break out of the fixedupdate()
+                setEnabled(false);
                 return;
-            } else if (trigger.getIsTriggered() && !requiresAll) {
-                mesh.enabled = true;
-                boxCollider.enabled = true;
-                return;
-            } else {
-                mesh.enabled = false;
-                boxCollider.enabled = false;
             }
         }
-        mesh.enabled = true;
-        boxCollider.enabled = true;
+        setEnabled(true);
+    }
+
+    private void setEnabled(bool newStatus) { //gets provided components and disables/enables it
+        mesh.enabled = newStatus;
+        boxCollider.enabled = newStatus;
     }
 }

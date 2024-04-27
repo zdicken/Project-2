@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour {
     public void setCheckpoint(int newCheckpoint) { //update the checkpoint that players respawn at
         currentCheckpoint = checkpoints.GetChild(newCheckpoint);
         currentCameraPoint = cameraPoints.GetChild(newCheckpoint);
+        //play a fucking sound
         mainCamera.target = currentCameraPoint.transform; //set the camera to its target position, which it will smoothly move toward
     }
 

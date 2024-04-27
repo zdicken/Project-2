@@ -15,6 +15,7 @@ public class appearTimer : MonoBehaviour {
     void Start() {
         timer = interval;
         text = gameObject.GetComponent<TextMeshPro>();
+        audioPlayer = new AudioPlayer(transform);
         foreach (Transform child in transform) {
             if(child.gameObject.GetComponent<MeshRenderer>() && child.gameObject.GetComponent<BoxCollider>()) {
                 children.Add(child.gameObject);
@@ -31,9 +32,7 @@ public class appearTimer : MonoBehaviour {
             }
             timer = interval;
             flipped = !flipped;
-            if(audioPlayer) {
-                audioPlayer.PlaySound("SwitchSound");
-            }
+            audioPlayer.PlaySound("SwitchSound");
         } else {
             text.text = timer.ToString("f2"); //truncates the timer float to two decimal points
         }
