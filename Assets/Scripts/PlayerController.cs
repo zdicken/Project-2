@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if (transform.position.y < -10 || queueReset) { //check if below certain y position. if yes, reset to last checkpoint
+        if (transform.position.y < -10 || queueReset) { //check if below certain y position OR hit reset button. if yes, reset to last checkpoint
             reset();
             queueReset = false;
             ragdollTimer = 0;
@@ -92,10 +92,10 @@ public class PlayerController : MonoBehaviour {
     public void ragdoll(float time) { //ragdolls the player for a certain amount of time in seconds
         ragdollTimer = time;
         rb.isKinematic = false;
-        controller.enabled = false;
-        rb.velocity = new Vector3(movementInput.x, playerVelocity.y, movementInput.y);
+        controller.enabled = false; //disable character controller and enable rigidbody
+        rb.velocity = new Vector3(movementInput.x, playerVelocity.y, movementInput.y); //transfer character controller velocity to rigidbody
         Transform transform = gameObject.transform;
         rb.AddForceAtPosition(transform.forward * 10, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z));
-        rb.AddRelativeTorque(new Vector3(Random.Range(0f, 10f), Random.Range(0f, 10f), Random.Range(0f, 10f)));
+        rb.AddRelativeTorque(new Vector3(Random.Range(0f, 10f), Random.Range(0f, 10f), Random.Range(0f, 10f))); //add random torque cause it's funny
     }
 }
